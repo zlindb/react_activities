@@ -1,0 +1,46 @@
+
+form{
+  width:700px;
+  background:rgba(0,0,0,.1);
+  padding:50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+label{
+  font-family: sans-serif;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color:black;
+  font-weight: bold;
+}
+
+input[type=text], input[type=password],input[type=email] {
+    display:inline-block;
+    text-align:left;
+    border:none;
+    width:475px;
+    padding:7px;
+    font-size:1.2em;
+    margin:10px 0;
+    color:black;
+}
+input[type=text]:focus{
+  background: none;
+  border: none;
+  color: black;
+}
+
+input[type=submit]{
+  background:transparent;
+  color:black;
+  font-family:sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin: 20px 0;
+  padding: 10px 30px;
+  border:2px solid black;
+
+}
