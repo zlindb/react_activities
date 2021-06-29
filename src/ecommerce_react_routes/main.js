@@ -1,28 +1,72 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from 'react-router-dom'
+
+const inventory = [
+  {
+    id: 1,
+    name: 'Shoes',
+    description: 'Shoes you can buy'
+  },
+  {
+    id: 2,
+    name: 'Backpack',
+    description: 'Backpack buy buy'
+  },
+  {
+    id: 3,
+    name: 'TravelMug',
+    description: 'Useful travelmug on sale'
+  }
+]
 
 const Homepage = () =>(
   <h1>Home</h1>
-  <hr/>
-)
-
-const Store = () =>(
-  <h1>My Store </h1>
-  <hr/>
 
 )
+
+
+const Store = () =>{
+  const {path, url} = useRouteMatch();
+
+  return (
+    <Router>
+      <div className ="ItemSales">
+        <h2>Item For Sales</h2>
+        <hr/>
+        <Switch>
+            {inventory.map(item=>(
+              <Route key={item.id} path={`${path}/item/${item.id}`}>
+                <p>{item.id}</p>
+                <p>{item.name}</p>
+                <p>{item.description}</p>
+              </Route>
+            ))}
+            <Route path={`${path}/item/*`}>
+              <p>Item Not Found</p>
+            </Route>
+        </Switch>
+      </div>
+
+    </Router>
+  )
+}
 
 const Navbar = () =>(
   <div className="Navbar">
     <Link to="/">Home</Link>
     &nbsp;
     <Link to="/store">Store</Link>
+    <hr/>
   </div>
 )
 
 const MyStore = () =>{
+  return (
+
   <Router>
-    <Navbar/>
+      <h1>My Store</h1>
+      <hr/>
+      <Navbar/>
     <Switch>
       <Route exact path="/">
         <Homepage />
@@ -35,7 +79,9 @@ const MyStore = () =>{
         <a href = '/'>Return Home</a>
       </Route>
     </Switch>
+
   </Router>
+  )
 }
 
 export default MyStore;

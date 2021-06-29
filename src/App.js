@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 
 //import FormValidation from './formActivities/MainForm'
-import MyStore from 'ecommerce_react_routes';
+import MyStore from './ecommerce_react_routes/main';
 
 class App extends React.Component {
 
@@ -14,6 +14,5 @@ class App extends React.Component {
     )
   }
 }
-
 
 export default App;
