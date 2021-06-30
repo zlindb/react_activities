@@ -27,18 +27,25 @@ const Homepage = () =>(
 
 const Store = () =>{
   const {path, url} = useRouteMatch();
-
+  console.log(url);
   return (
     <Router>
       <div className ="ItemSales">
         <h2>Item For Sales</h2>
         <hr/>
+        {inventory.map(item=>(
+          <div className="itemNav" key={item.id}>
+            <Link to={`${url}/item/${item.id}`}>{item.id}-{item.name}</Link>
+            <br/>
+          </div>
+        ))}
+        <hr/>
         <Switch>
             {inventory.map(item=>(
               <Route key={item.id} path={`${path}/item/${item.id}`}>
-                <p>{item.id}</p>
-                <p>{item.name}</p>
-                <p>{item.description}</p>
+                <p>Id: {item.id}</p>
+                <p>Name: {item.name}</p>
+                <p>Description: {item.description}</p>
               </Route>
             ))}
             <Route path={`${path}/item/*`}>
