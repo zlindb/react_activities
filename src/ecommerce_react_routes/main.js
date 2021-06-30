@@ -1,7 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useParams } from 'react-router-dom'
 
-const inventory = [
+//useParams - returns an object of the params for the route rendered
+// /user/:userName
+// const params = useParams(); params.userName
+
+const Inventory = [
   {
     id: 1,
     name: 'Shoes',
@@ -24,7 +28,6 @@ const Homepage = () =>(
 
 )
 
-
 const Store = () =>{
   const {path, url} = useRouteMatch();
   console.log(url);
@@ -33,22 +36,39 @@ const Store = () =>{
       <div className ="ItemSales">
         <h2>Item For Sales</h2>
         <hr/>
-        {inventory.map(item=>(
+        {/*{Inventory.map(item=>(
           <div className="itemNav" key={item.id}>
             <Link to={`${url}/item/${item.id}`}>{item.id}-{item.name}</Link>
             <br/>
           </div>
         ))}
-        <hr/>
+        */}
+
+          {/*path works better here instead of url*/}
+          {Inventory.map(i=>(
+            <ItemSmall {...i} baseUrl={path} />
+
+          ))}
+          <hr/>
+
         <Switch>
-            {inventory.map(item=>(
+        {/*
+            {Inventory.map(item=>(
               <Route key={item.id} path={`${path}/item/${item.id}`}>
                 <p>Id: {item.id}</p>
                 <p>Name: {item.name}</p>
                 <p>Description: {item.description}</p>
               </Route>
             ))}
-            <Route path={`${path}/item/*`}>
+          */
+          /* Version Two */
+        }
+
+
+            <Route path={`${path}/items/:itemId`}>
+              <Item />
+            </Route>
+            <Route path={`${path}/items/*`}>
               <p>Item Not Found</p>
             </Route>
         </Switch>
@@ -57,6 +77,39 @@ const Store = () =>{
     </Router>
   )
 }
+
+const ItemSmall = (props)=>(
+  <div className="Item" key={`item-${props.id}`}>
+    <Link to ={`${props.baseUrl}/items/${props.id}`}>{props.name}</Link>
+  </div>
+)
+
+const Item = () =>{
+  let {itemId} = useParams();
+
+  const [item, ...rest] = Inventory.filter(i => i.id.toString() === itemId);
+  if(item){
+    return (
+      <div className="Item">
+        <p>
+          <strong>id:</strong> {item.id}
+        </p>
+        <p>
+          <strong>name:</strong> {item.name}
+        </p>
+        <p>
+          <strong>description:</strong> {item.description}
+        </p>
+      </div>
+    )
+  }else{
+    return (
+      <p>404 Item not found</p>
+    )
+  }
+}
+
+
 
 const Navbar = () =>(
   <div className="Navbar">
